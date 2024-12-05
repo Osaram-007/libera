@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Text Input and Static Text Box Example</title>
+</head>
+<body>
+	<label for="inputBox">Enter some text:</label>
+	<input type="text" id="inputBox">
+	<button onclick="updateStaticBox()">Update</button>
+	<br><br>
+	<label for="staticBox">Static Text Box:</label>
+	<textarea id="staticBox" rows="4" cols="50" readonly></textarea>
+
+	<script>
+		function updateStaticBox() {
+			var inputText = document.getElementById("inputBox").value;
+			document.getElementById("staticBox").value = "You entered: " + inputText;
+
+			const url = "http://127.0.0.1:5000/q/"+inputText; // Replace with your API endpoint URL
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", url);
+            xhr.onload = function() {
+              if (xhr.status === 200) {
+                console.log(xhr.responseText);
+                document.getElementById("staticBox").value = xhr.responseText
+              } else {
+                console.error("Request failed. Status code: " + xhr.status);
+              }
+            };
+            xhr.send();
+		}
+	</script>
+</body>
+</html>
